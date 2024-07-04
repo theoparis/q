@@ -79,9 +79,13 @@ source_group("Header Files\\q"
 ###############################################################################
 # Library
 
-add_library(libq INTERFACE)
+add_library(q INTERFACE)
 
-target_include_directories(libq INTERFACE include/)
-target_link_libraries(libq INTERFACE cycfi::infra)
+target_include_directories(q INTERFACE
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+target_link_libraries(q INTERFACE cycfi::infra)
 
-
+install(TARGETS q EXPORT q DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")

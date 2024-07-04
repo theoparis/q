@@ -20,7 +20,7 @@ option(BUILD_SHARED_LIBS "Build shared/dynamic library" OFF)
 add_subdirectory(external/portaudio)
 add_subdirectory(external/portmidi)
 
-add_library(libqio STATIC
+add_library(qio
    src/audio_file.cpp
    src/audio_device.cpp
    src/audio_stream.cpp
@@ -28,8 +28,8 @@ add_library(libqio STATIC
    src/midi_stream.cpp
 )
 
-target_link_libraries(libqio
-   libq
+target_link_libraries(qio
+   q
    cycfi::infra
    portmidi
    PortAudio
@@ -44,9 +44,12 @@ if (APPLE)
    mark_as_advanced(COREAUDIO_LIBRARY AUDIOTOOLBOX_LIBRARY AUDIOUNIT_LIBRARY CARBON_LIBRARY)
 endif()
 
-target_include_directories(libqio
+target_include_directories(qio
    PRIVATE external/include/
-   PUBLIC include/
+   PUBLIC
+   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+	 $<INSTALL_INTERFACE:include>
 )
 
-
+install(TARGETS qio EXPORT qio DESTINATION lib)
+install(DIRECTORY include/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")

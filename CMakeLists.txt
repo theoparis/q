@@ -10,6 +10,8 @@ project(q)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(GNUInstallDirs)
+
 option(Q_BUILD_EXAMPLES "build Q library examples" ON)
 option(Q_BUILD_TEST "build Q library tests" ON)
 option(Q_BUILD_IO "build Q IO library" ON)
